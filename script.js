@@ -79,7 +79,7 @@ function getPublicIp() {
   //  .then((response) => response.json())
   //  .then((data) => {
    //   currentCity = data.city;
-   getWeatherData(, currentUnit, hourlyorWeek);
+   getWeatherData("LasVegas", currentUnit, hourlyorWeek);
    // })
    // .catch((err) => {
    //   console.error(err);
