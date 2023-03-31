@@ -72,18 +72,18 @@ setInterval(() => {
 
 // function to get public ip address
 function getPublicIp() {
-  fetch("https://geolocation-db.com/json/", {
-    method: "GET",
-    headers: {},
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      currentCity = data.city;
-      getWeatherData(data.city, currentUnit, hourlyorWeek);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  //fetch("https://geolocation-db.com/json/", {
+  //  method: "GET",
+  //  headers: {},
+  //})
+  //  .then((response) => response.json())
+  //  .then((data) => {
+   //   currentCity = data.city;
+   getWeatherData(, currentUnit, hourlyorWeek);
+   // })
+   // .catch((err) => {
+   //   console.error(err);
+   // });
 }
 
 getPublicIp();
@@ -91,7 +91,9 @@ getPublicIp();
 // function to get weather data
 function getWeatherData(city, unit, hourlyorWeek) {
   fetch(
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=EJ6UBL2JEQGYB3AA4ENASN62J&contentType=json`,
+    //`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=EJ6UBL2JEQGYB3AA4ENASN62J&contentType=json`,
+    `${city}.json`,
+
     {
       method: "GET",
       headers: {},
