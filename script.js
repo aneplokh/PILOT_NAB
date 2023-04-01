@@ -7,6 +7,10 @@ window.onload = function() {
   }, 6000); // 10 seconds
 };
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const offlineMode = urlParams.get('offline_mode');
+
 const temp = document.getElementById("temp"),
   date = document.getElementById("date-time"),
   condition = document.getElementById("condition"),
@@ -90,10 +94,13 @@ getPublicIp();
 
 // function to get weather data
 function getWeatherData(city, unit, hourlyorWeek) {
+  if(offlineMode == 1){
+    url = `${city}.json`;
+  }else{
+    url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=EJ6UBL2JEQGYB3AA4ENASN62J&contentType=json`;
+  }
   fetch(
-    //`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=EJ6UBL2JEQGYB3AA4ENASN62J&contentType=json`,
-    `${city}.json`,
-
+    `${url}`,
     {
       method: "GET",
       headers: {},
@@ -178,37 +185,47 @@ function updateForecast(data, unit, type) {
 
 // function to change weather icons
 function getIcon(condition) {
+  if(offlineMode == 1){
+    urlPrefix ="";
+  }else{
+    urlPrefix ="https://i.ibb.co/";
+  }
   if (condition === "partly-cloudy-day") {
-    return "https://i.ibb.co/PZQXH8V/27.png";
+    return urlPrefix + "PZQXH8V/27.png";
   } else if (condition === "partly-cloudy-night") {
-    return "https://i.ibb.co/Kzkk59k/15.png";
+    return urlPrefix + "Kzkk59k/15.png";
   } else if (condition === "rain") {
-    return "https://i.ibb.co/kBd2NTS/39.png";
+    return urlPrefix + "kBd2NTS/39.png";
   } else if (condition === "clear-day") {
-    return "https://i.ibb.co/rb4rrJL/26.png";
+    return urlPrefix + "rb4rrJL/26.png";
   } else if (condition === "clear-night") {
-    return "https://i.ibb.co/1nxNGHL/10.png";
+    return urlPrefix + "1nxNGHL/10.png";
   } else {
-    return "https://i.ibb.co/rb4rrJL/26.png";
+    return urlPrefix + "rb4rrJL/26.png";
   }
 }
 
 // function to change background depending on weather conditions
 function changeBackground(condition) {
+  if(offlineMode == 1){
+    urlPrefix ="";
+  }else{
+    urlPrefix ="https://i.ibb.co/";
+  }
   const body = document.querySelector("body");
   let bg = "";
   if (condition === "partly-cloudy-day") {
-    bg = "https://i.ibb.co/qNv7NxZ/pc.webp";
+    bg = urlPrefix + "qNv7NxZ/pc.webp";
   } else if (condition === "partly-cloudy-night") {
-    bg = "https://i.ibb.co/RDfPqXz/pcn.jpg";
+    bg = urlPrefix + "RDfPqXz/pcn.jpg";
   } else if (condition === "rain") {
-    bg = "https://i.ibb.co/h2p6Yhd/rain.webp";
+    bg = urlPrefix + "h2p6Yhd/rain.webp";
   } else if (condition === "clear-day") {
-    bg = "https://i.ibb.co/WGry01m/cd.jpg";
+    bg = urlPrefix + "WGry01m/cd.jpg";
   } else if (condition === "clear-night") {
-    bg = "https://i.ibb.co/kqtZ1Gx/cn.jpg";
+    bg = urlPrefix + "kqtZ1Gx/cn.jpg";
   } else {
-    bg = "https://i.ibb.co/qNv7NxZ/pc.webp";
+    bg = urlPrefix + "qNv7NxZ/pc.webp";
   }
   body.style.backgroundImage = `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ),url(${bg})`;
 }
