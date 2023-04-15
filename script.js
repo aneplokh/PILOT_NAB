@@ -110,19 +110,19 @@ function getWeatherData(city, unit, hourlyorWeek) {
     .then((data) => {
       let today = data.currentConditions;
       if (unit === "c") {
-        temp.innerText = today.temp;
+        temp.innerText = Math.round(today.temp);
       } else {
-        temp.innerText = celciusToFahrenheit(today.temp);
+        temp.innerText = Math.round(celciusToFahrenheit(today.temp));
       }
       currentLocation.innerText = data.resolvedAddress;
-      condition.innerText = today.conditions;
-      rain.innerText = "Perc - " + today.precip + "%";
+      condition.innerText = "Conditions: " + today.conditions;
+      rain.innerText = "Chance of Rain: " + today.precip + "%";
       uvIndex.innerText = today.uvindex;
-      windSpeed.innerText = today.windspeed;
+      windSpeed.innerText = Math.round(today.windspeed / 1.6);
       measureUvIndex(today.uvindex);
       mainIcon.src = getIcon(today.icon);
       changeBackground(today.icon);
-      humidity.innerText = today.humidity + "%";
+      humidity.innerText = Math.round(today.humidity) + "%";
       updateHumidityStatus(today.humidity);
       visibilty.innerText = today.visibility;
       updateVisibiltyStatus(today.visibility);
@@ -158,9 +158,9 @@ function updateForecast(data, unit, type) {
     if (type === "week") {
       dayName = getDayName(data[day].datetime);
     }
-    let dayTemp = data[day].temp;
+    let dayTemp = Math.round(data[day].temp);
     if (unit === "f") {
-      dayTemp = celciusToFahrenheit(data[day].temp);
+      dayTemp = Math.round(celciusToFahrenheit(data[day].temp));
     }
     let iconCondition = data[day].icon;
     let iconSrc = getIcon(iconCondition);
@@ -249,8 +249,8 @@ function covertTimeTo12HourFormat(time) {
   let ampm = hour >= 12 ? "pm" : "am";
   hour = hour % 12;
   hour = hour ? hour : 12; // the hour '0' should be '12'
-  hour = hour < 10 ? "0" + hour : hour;
-  minute = minute < 10 ? "0" + minute : minute;
+  //hour = hour < 10 ? "0" + hour : hour;
+  //minute = minute < 10 ? "0" + minute : minute;
   let strTime = hour + ":" + minute + " " + ampm;
   return strTime;
 }
