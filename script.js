@@ -69,10 +69,10 @@ function getDateTime() {
 }
 
 //Updating date and time
-date.innerText = getDateTime();
-setInterval(() => {
-  date.innerText = getDateTime();
-}, 1000);
+//date.innerText = getDateTime();
+//setInterval(() => {
+  //date.innerText = getDateTime();
+//}, 1000);
 
 // function to get public ip address
 function getPublicIp() {
@@ -96,6 +96,7 @@ getPublicIp();
 function getWeatherData(city, unit, hourlyorWeek) {
   if(offlineMode == 1){
     url = `${city}.json`;
+    //url = `https://aneplokh.github.io/PILOT_NAB/LasVegas.json`;
   }else{
     url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city}?unitGroup=metric&key=EJ6UBL2JEQGYB3AA4ENASN62J&contentType=json`;
   }
@@ -126,15 +127,15 @@ function getWeatherData(city, unit, hourlyorWeek) {
       updateHumidityStatus(today.humidity);
       visibilty.innerText = today.visibility;
       updateVisibiltyStatus(today.visibility);
-      airQuality.innerText = today.winddir;
+      //airQuality.innerText = today.winddir;
       updateAirQualityStatus(today.winddir);
       if (hourlyorWeek === "hourly") {
         updateForecast(data.days[0].hours, unit, "day");
       } else {
         updateForecast(data.days, unit, "week");
       }
-      sunRise.innerText = covertTimeTo12HourFormat(today.sunrise);
-      sunSet.innerText = covertTimeTo12HourFormat(today.sunset);
+      sunRise.innerText = covertTimeTo12HourFormat(today.sunrise) + "\n" + covertTimeTo12HourFormat(today.sunset);
+      //sunSet.innerText = covertTimeTo12HourFormat(today.sunset);
     })
     .catch((err) => {
       // alert("City not found in our database");
@@ -319,7 +320,7 @@ function updateVisibiltyStatus(visibility) {
 
 // function to get air quality status
 function updateAirQualityStatus(airquality) {
-  if (airquality <= 50) {
+  /* if (airquality <= 50) {
     airQualityStatus.innerText = "Good👌";
   } else if (airquality <= 100) {
     airQualityStatus.innerText = "Moderate😐";
@@ -331,7 +332,7 @@ function updateAirQualityStatus(airquality) {
     airQualityStatus.innerText = "Very Unhealthy😨";
   } else {
     airQualityStatus.innerText = "Hazardous😱";
-  }
+  }*/
 }
 
 // function to handle search form
